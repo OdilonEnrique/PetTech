@@ -24,7 +24,7 @@ export class PostService {
       data.animalId,
       data.titulo,
       data.conteudo,
-      data.fotoUrl,
+      data.fotoUrl
     );
 
     post.validar();
@@ -33,6 +33,10 @@ export class PostService {
   }
 
   async curtir(id: number) {
+    if (!id || Number.isNaN(id)) {
+      throw new Error("ID do post inválido");
+    }
+
     const postExiste = await this.repository.buscarPorId(id);
 
     if (!postExiste) {

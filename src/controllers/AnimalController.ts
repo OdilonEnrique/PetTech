@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import { AnimalService } from "../services/AnimalService.js";
+import { UploadService } from "../services/UploadService.js";
 
 export class AnimalController {
   private service = new AnimalService();
+  private uploadService = new UploadService();
 
   async criar(req: Request, res: Response) {
     try {
       const fotoUrl = req.file
-        ? `/uploads/animals/${req.file.filename}`
+        ? await this.uploadService.uploadImage(
+            req.file.path,
+            "pettech/animals"
+          )
         : undefined;
 
       const animal = await this.service.criar({

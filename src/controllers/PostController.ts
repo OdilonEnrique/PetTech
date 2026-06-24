@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
 import { PostService } from "../services/PostService.js";
+import { UploadService } from "../services/UploadService.js";
 
 export class PostController {
   private service = new PostService();
+  private uploadService = new UploadService();
 
   async criar(req: Request, res: Response) {
     try {
       const fotoUrl = req.file
-        ? `/uploads/posts/${req.file.filename}`
+        ? await this.uploadService.uploadImage(req.file.path, "pettech/posts")
         : undefined;
 
       const post = await this.service.criar({
