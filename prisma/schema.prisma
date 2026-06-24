@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Pessoa {
+  id          Int          @id @default(autoincrement())
+  email       String
+  cpf         String       @unique
+  nome        String
+  comentarios Comentario[]
+}
+
+model Comentario {
+  id       Int     @id @default(autoincrement())
+  text     String
+  pessoaId Int
+  animalId Int?
+
+  pessoa   Pessoa  @relation(fields: [pessoaId], references: [id])
+  animal   Animal? @relation(fields: [animalId], references: [id])
+}
+
+model Animal {
+  id                 Int          @id @default(autoincrement())
+  especie            String
+  raca               String
+  fase               FaseAnimal
+  alimentacao        String
+  higiene            String
+  primeirosSocorros  String
+  comentarios        Comentario[]
+}
+
+enum FaseAnimal {
+  FILHOTE
+  ADULTO
+  IDOSO
+}
