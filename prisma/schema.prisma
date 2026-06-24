@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -9,34 +8,48 @@ datasource db {
 
 model Pessoa {
   id          Int          @id @default(autoincrement())
-  email       String
-  cpf         String       @unique
   nome        String
   comentarios Comentario[]
 }
 
-model Comentario {
-  id       Int     @id @default(autoincrement())
-  text     String
-  pessoaId Int
-  animalId Int?
-
-  pessoa   Pessoa  @relation(fields: [pessoaId], references: [id])
-  animal   Animal? @relation(fields: [animalId], references: [id])
-}
-
 model Animal {
-  id                 Int          @id @default(autoincrement())
-  especie            String
-  raca               String
-  fase               FaseAnimal
-  alimentacao        String
-  higiene            String
-  primeirosSocorros  String
-  comentarios        Comentario[]
+  id                Int       @id @default(autoincrement())
+  fotoUrl           String?
+  nome              String
+  especie           String
+  raca              String?
+  faixaEtaria       FaixaEtaria
+  alimentacao       String
+  higiene           String
+  primeirosSocorros String
+  posts             Post[]
 }
 
-enum FaseAnimal {
+model Post {
+  id          Int          @id @default(autoincrement())
+  animalId    Int
+  titulo      String
+  conteudo    String
+  fotoUrl     String?
+  likes       Int          @default(0)
+  createdAt   DateTime     @default(now())
+
+  animal      Animal       @relation(fields: [animalId], references: [id])
+  comentarios Comentario[]
+}
+
+model Comentario {
+  id        Int      @id @default(autoincrement())
+  pessoaId  Int
+  postId    Int
+  texto      String
+  createdAt DateTime @default(now())
+
+  pessoa    Pessoa   @relation(fields: [pessoaId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+}
+
+enum FaixaEtaria {
   FILHOTE
   ADULTO
   IDOSO
