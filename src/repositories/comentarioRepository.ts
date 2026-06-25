@@ -1,30 +1,31 @@
-import { prisma } from "../database/prisma";
+import { prisma } from "../config/prisma.js";
 
-interface CriarComentarioDTO {
-  text: string;
+type CriarComentarioDTO = {
   pessoaId: number;
-  animalId?: number;
-}
+  postId: number;
+  texto: string;
+};
 
-export async function criarComentario(dados: CriarComentarioDTO) {
-  return prisma.comentario.create({
-    data: {
-      text: dados.text,
-      pessoaId: dados.pessoaId,
-      animalId: dados.animalId,
-    },
-    include: {
-      pessoa: true,
-      animal: true,
-    },
-  });
-}
+export class ComentarioRepository {
+  async criar(data: CriarComentarioDTO) {
+    return prisma.comentario.create({
+      data,
+      include: {
+        pessoa: true,
+        post: true,
+      },
+    });
+  }
 
-export async function listarComentarios() {
-  return prisma.comentario.findMany({
-    include: {
-      pessoa: true,
-      animal: true,
-    },
-  });
+  async listarPorPost(postId: number) {
+    return prisma.comentario.findMany({
+      where: { postId },
+      include: {
+        pessoa: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
 }

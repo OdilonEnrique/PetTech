@@ -1,15 +1,25 @@
-import { Pessoa } from "./pessoa";
-
 export class Comentario {
-  constructor(
-    public text: string,
-    public pessoa: Pessoa,
-  ) {}
+  private pessoaId: number;
+  private postId: number;
+  private texto: string;
 
-  exibirDados() {
+  constructor(pessoaId: number, postId: number, texto: string) {
+    this.pessoaId = pessoaId;
+    this.postId = postId;
+    this.texto = texto;
+  }
+
+  public validar(): void {
+    if (!this.pessoaId) throw new Error("Pessoa é obrigatória");
+    if (!this.postId) throw new Error("Post é obrigatório");
+    if (!this.texto.trim()) throw new Error("Comentário é obrigatório");
+  }
+
+  public getDados() {
     return {
-      text: this.text,
-      pessoa: this.pessoa.exibirDados(),
+      pessoaId: this.pessoaId,
+      postId: this.postId,
+      texto: this.texto,
     };
   }
 }

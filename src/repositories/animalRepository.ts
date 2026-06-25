@@ -1,24 +1,38 @@
-import { prisma } from "../database/prisma";
-import { FaseAnimal } from "../generated/prisma/client";
-import { AnimalDados } from "../models/animal";
+import { prisma } from "../config/prisma.js";
+import { FaixaEtaria } from "@prisma/client";
 
-export async function criarAnimal(animal: AnimalDados) {
-  return prisma.animal.create({
-    data: {
-      especie: animal.especie,
-      raca: animal.raca,
-      fase: animal.fase as FaseAnimal,
-      alimentacao: animal.alimentacao,
-      higiene: animal.higiene,
-      primeirosSocorros: animal.primeirosSocorros,
-    },
-  });
-}
+type CriarAnimalDTO = {
+  nome: string;
+  especie: string;
+  especieOutro?: string;
+  raca?: string;
+  faixaEtaria: FaixaEtaria;
+  alimentacao: string;
+  higiene: string;
+  primeirosSocorros: string;
+  fotoUrl?: string;
+};
 
-export async function listarAnimais() {
-  return prisma.animal.findMany({
-    include: {
-      comentarios: true,
-    },
-  });
+export class AnimalRepository {
+  async criar(data: CriarAnimalDTO) {
+    return prisma.animal.create({
+      data,
+    });
+  }
+
+  async listar() {
+    return prisma.animal.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
+
+  async buscarPorId(id: number) {
+    return prisma.animal.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }

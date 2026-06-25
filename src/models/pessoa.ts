@@ -1,15 +1,19 @@
 export class Pessoa {
-  constructor(
-    public email: string,
-    public cpf: string,
-    public nome: string,
-  ) {}
+  private nome: string;
 
-  exibirDados() {
-    return {
-      email: this.email,
-      cpf: this.cpf,
-      nome: this.nome,
-    };
+  constructor(nome: string) {
+    this.nome = nome;
+  }
+
+  public getNome(): string {
+    return this.nome;
+  }
+
+  public alterarNome(nome: string): void {
+    this.nome = nome;
+  }
+
+  public validar(): boolean {
+    return this.nome.trim().length >= 3;
   }
 }

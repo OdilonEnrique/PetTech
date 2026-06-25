@@ -1,20 +1,27 @@
-import { prisma } from "../database/prisma";
-import { Pessoa } from "../models/pessoa";
+import { prisma } from "../config/prisma.js";
 
-export async function criarPessoa(pessoa: Pessoa) {
-  return prisma.pessoa.create({
-    data: {
-      email: pessoa.email,
-      cpf: pessoa.cpf,
-      nome: pessoa.nome,
-    },
-  });
-}
+export class PessoaRepository {
+  async criar(nome: string) {
+    return prisma.pessoa.create({
+      data: {
+        nome,
+      },
+    });
+  }
 
-export async function listarPessoas() {
-  return prisma.pessoa.findMany({
-    include: {
-      comentarios: true,
-    },
-  });
+  async listar() {
+    return prisma.pessoa.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
+
+  async buscarPorId(id: number) {
+    return prisma.pessoa.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }
