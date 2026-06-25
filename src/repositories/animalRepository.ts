@@ -1,5 +1,5 @@
 import { prisma } from "../config/prisma.js";
-import { FaixaEtaria } from "../models/animal.js";
+import { FaixaEtaria } from "../generated/prisma/enums.js";
 // import { FaixaEtaria } from "@prisma/client";
 
 type CriarAnimalDTO = {
