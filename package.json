@@ -1,9 +1,9 @@
 {
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "prisma generate && tsc",
-    "start": "prisma generate && node dist/server.js",
-    "postinstall": "prisma generate",
+    "build": "npx prisma generate && tsc",
+    "start": "node dist/server.js",
+    "postinstall": "npx prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio"
