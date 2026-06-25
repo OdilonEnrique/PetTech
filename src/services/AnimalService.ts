@@ -1,5 +1,5 @@
-import { Animal, FaixaEtaria } from "../models/Animal.js";
-import { AnimalRepository } from "../repositories/AnimalRepository.js";
+import { Animal, FaixaEtaria } from "../models/animal";
+import { AnimalRepository } from "../repositories/animalRepository";
 
 type CriarAnimalInput = {
   nome: string;

@@ -1,5 +1,5 @@
-import { Pessoa } from "../models/Pessoa.js";
-import { PessoaRepository } from "../repositories/PessoaRepository.js";
+import { Pessoa } from "../models/pessoa";
+import { PessoaRepository } from "../repositories/pessoaRepository";
 
 export class PessoaService {
   private repository = new PessoaRepository();

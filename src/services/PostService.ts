@@ -1,6 +1,7 @@
-import { Post } from "../models/Post.js";
-import { AnimalRepository } from "../repositories/AnimalRepository.js";
-import { PostRepository } from "../repositories/PostRepository.js";
+import { Post } from "../models/Post";
+import { AnimalRepository } from "../repositories/animalRepository";
+// import { AnimalRepository } from "../repositories/";
+import { PostRepository } from "../repositories/PostRepository";
 
 type CriarPostInput = {
   animalId: number;

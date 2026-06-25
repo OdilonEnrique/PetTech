@@ -1,7 +1,7 @@
-import { Comentario } from "../models/Comentario.js";
-import { ComentarioRepository } from "../repositories/ComentarioRepository.js";
-import { PessoaRepository } from "../repositories/PessoaRepository.js";
-import { PostRepository } from "../repositories/PostRepository.js";
+import { Comentario } from "../models/comentario";
+import { ComentarioRepository } from "../repositories/comentarioRepository";
+import { PessoaRepository } from "../repositories/pessoaRepository";
+import { PostRepository } from "../repositories/PostRepository";
 
 type CriarComentarioInput = {
   pessoaId: number;
